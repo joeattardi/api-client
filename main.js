@@ -60,6 +60,8 @@ app.on('activate', function() {
 });
 
 ipcMain.on('sendRequest', (event, args) => {
+  let start;
+
   const request = net.request({
     method: args.method,
     url: args.url
@@ -74,9 +76,15 @@ ipcMain.on('sendRequest', (event, args) => {
     });
 
     response.on('end', () => {
-      event.sender.send('response', responseBody);
+      event.sender.send('response', {
+        body: responseBody,
+        status: response.statusCode,
+        statusMessage: response.statusMessage,
+        time: Date.now() - start
+      });
     })
   });
 
+  start = Date.now();
   request.end();
 });

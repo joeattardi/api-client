@@ -7,7 +7,7 @@ import styled from 'styled-components';
 
 import './App.css';
 import Header from './Header';
-import Results from './Results';
+import Results from './results/Results';
 import UrlEntry from './UrlEntry';
 
 const { ipcRenderer } = window.require('electron');

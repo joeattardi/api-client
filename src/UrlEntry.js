@@ -14,6 +14,7 @@ const HTTP_METHODS = [
 ];
 
 const Container = styled.div`
+  background: #EFEFEF;
   margin: 0.5em;
   display: flex;
   align-items: center;
