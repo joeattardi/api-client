@@ -5,13 +5,19 @@ import { faCode } from '@fortawesome/free-solid-svg-icons';
 
 import './App.css';
 import Header from './Header';
+import UrlEntry from './UrlEntry';
 
 library.add(faCode);
 
 class App extends Component {
   render() {
     return (
-      <Header />
+      <div>
+        <Header />
+        <main>
+          <UrlEntry />
+        </main>
+      </div>
     );
   }
 }
