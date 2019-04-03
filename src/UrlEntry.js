@@ -3,6 +3,16 @@ import React from 'react';
 import Select from 'react-select';
 import styled from 'styled-components';
 
+const HTTP_METHODS = [
+  'DELETE',
+  'GET',
+  'HEAD',
+  'OPTIONS',
+  'PATCH',
+  'POST',
+  'PUT'
+];
+
 const Container = styled.div`
   margin: 0.5em;
   display: flex;
@@ -39,18 +49,46 @@ const Button = styled.button`
   }
 `;
 
-const methods = [
-  { value: 'GET', label: 'GET' },
-  { value: 'POST', label: 'POST' },
-  { value: 'PUT', label: 'PUT' }
-];
+const methodOptions = HTTP_METHODS.map(method => ({ value: method, label: method }));
 
-export default function UrlEntry(props) {
-  return (
-    <Container>
-      <StyledSelect options={methods} value={methods[0]}/>
-      <Input type="text" />
-      <Button>Go</Button>
-    </Container>
-  );
+export default class UrlEntry extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      url: '',
+      method: { value: 'GET', label: 'GET' }
+    };
+
+    this.handleClickGo = this.handleClickGo.bind(this);
+    this.handleUrlChange = this.handleUrlChange.bind(this);
+    this.handleMethodChange = this.handleMethodChange.bind(this);
+  }
+
+  handleClickGo() {
+    this.props.onSend({
+      url: this.state.url,
+      method: this.state.method.value
+    });
+  }
+
+  handleUrlChange(event) {
+    this.setState({
+      url: event.target.value
+    })
+  }
+
+  handleMethodChange(method) {
+    this.setState({ method });
+  }
+
+  render() {
+    return (
+      <Container>
+        <StyledSelect options={methodOptions} value={this.state.method} onChange={this.handleMethodChange} />
+        <Input type="text" value={this.state.url} onChange={this.handleUrlChange} />
+        <Button onClick={this.handleClickGo}>Go</Button>
+      </Container>
+    );
+  }
 }

@@ -9,17 +9,19 @@ import UrlEntry from './UrlEntry';
 
 library.add(faCode);
 
-class App extends Component {
+export default class App extends Component {
   render() {
     return (
       <div>
         <Header />
         <main>
-          <UrlEntry />
+          <UrlEntry onSend={sendRequest} />
         </main>
       </div>
     );
   }
 }
 
-export default App;
+function sendRequest(requestConfig) {
+  console.log(`Send ${requestConfig.method} request to ${requestConfig.url}!`);
+}
