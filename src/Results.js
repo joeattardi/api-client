@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
+import SyntaxHighlighter from 'react-syntax-highlighter';
 
 const Container = styled.div`
+  background: #F0F0F0;
   width: 90%;
   border: 1px solid #999999;
   border-radius: 5px;
@@ -17,9 +19,9 @@ export default class Results extends Component {
   render() {
     return (
       <Container>
-        <pre>
+        <SyntaxHighlighter language="json">
           {this.prettyPrintJSON(this.props.response)}
-        </pre>
+        </SyntaxHighlighter>
       </Container>
     );
   }
