@@ -1,15 +1,16 @@
 // Modules to control application life and create native browser window
-const { app, BrowserWindow } = require('electron');
-
 const path = require('path');
 
+const { app, BrowserWindow } = require('electron');
+
 const isDev = require('electron-is-dev');
+const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
-function createWindow() {
+async function createWindow() {
   // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 800,
@@ -22,8 +23,10 @@ function createWindow() {
   // and load the index.html of the app.
   mainWindow.loadURL(isDev ? 'http://localhost:3000' : `file://${path.join(__dirname, './build/index.html')}`);
 
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+  if (isDev) {
+    await installExtension(REACT_DEVELOPER_TOOLS);
+    mainWindow.webContents.openDevTools();
+  }
 
   mainWindow.maximize();
 
