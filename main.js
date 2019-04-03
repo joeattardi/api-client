@@ -1,10 +1,12 @@
 // Modules to control application life and create native browser window
 const path = require('path');
 
-const { app, BrowserWindow } = require('electron');
+const { app, BrowserWindow, ipcMain, net } = require('electron');
 
 const isDev = require('electron-is-dev');
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
+
+const { version } = require('./package.json');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -57,5 +59,24 @@ app.on('activate', function() {
   if (mainWindow === null) createWindow();
 });
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and require them here.
+ipcMain.on('sendRequest', (event, args) => {
+  const request = net.request({
+    method: args.method,
+    url: args.url
+  });
+
+  request.setHeader('User-Agent', `APIClient/${version}`);
+
+  request.on('response', response => {
+    let responseBody = '';
+    response.on('data', chunk => {
+      responseBody += chunk;
+    });
+
+    response.on('end', () => {
+      event.sender.send('response', responseBody);
+    })
+  });
+
+  request.end();
+});

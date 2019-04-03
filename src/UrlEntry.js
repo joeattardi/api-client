@@ -20,6 +20,7 @@ const Container = styled.div`
   border: 1px solid #999999;
   border-radius: 5px;
   padding: 0.5em;
+  width: 90%;
 `;
 
 const Input = styled.input`
@@ -32,7 +33,7 @@ const Input = styled.input`
 `;
 
 const StyledSelect = styled(Select)`
-  width: 10em;
+  width: 8em;
 `;
 
 const Button = styled.button`
@@ -56,7 +57,7 @@ export default class UrlEntry extends React.Component {
     super(props);
 
     this.state = {
-      url: '',
+      url: 'http://httpbin.org/get',
       method: { value: 'GET', label: 'GET' }
     };
 
