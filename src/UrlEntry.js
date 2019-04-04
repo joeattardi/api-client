@@ -21,7 +21,7 @@ const Container = styled.form`
   border: 1px solid #999999;
   border-radius: 5px;
   padding: 0.5em;
-  width: 90%;
+  width: 100%;
   box-sizing: border-box;
 `;
 

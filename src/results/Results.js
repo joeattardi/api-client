@@ -8,7 +8,7 @@ import Headers from './Headers';
 import Summary from './Summary';
 
 const Container = styled.div`
-  width: 90%;
+  width: 100%;
   background: #EFEFEF;
   border: 1px solid #999999;
   border-radius: 5px;

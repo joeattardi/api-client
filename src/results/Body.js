@@ -19,9 +19,33 @@ const resultStyles = {
   overflow: 'scroll'
 };
 
+const languages = {
+  'application/json': 'json',
+  'application/xml': 'xml',
+  'text/html': 'html'
+};
+
+
 export default class Body extends Component {
   prettyPrintJSON(json) {
     return JSON.stringify(JSON.parse(json), null, 2);
+  }
+
+  getPrettyBody() {
+    const [contentType] = this.props.response.headers['content-type'];
+
+    let body = this.props.response.body;
+    if (contentType === 'application/json') {
+      body = this.prettyPrintJSON(body);
+    }
+
+    const language = languages[contentType] || 'text';
+
+    return (
+      <SyntaxHighlighter language={language} customStyle={resultStyles}>
+        {body}
+      </SyntaxHighlighter>
+    );
   }
 
   render() {
@@ -33,9 +57,7 @@ export default class Body extends Component {
             <Tab>Raw</Tab>
           </TabList>
           <TabPanel>
-            <SyntaxHighlighter language="json" customStyle={resultStyles}>
-              {this.prettyPrintJSON(this.props.response.body)}
-            </SyntaxHighlighter>
+            {this.getPrettyBody()}
           </TabPanel>
           <TabPanel>
             <RawResults response={this.props.response} />

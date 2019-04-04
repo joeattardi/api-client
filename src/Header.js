@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import styled from 'styled-components';
 
 import { version } from '../package.json';
@@ -13,6 +12,7 @@ const HeaderContainer = styled.header`
 
   h1 {
     margin: 0;
+    font-size: 1.5em;
   }
 `;
 
@@ -29,7 +29,6 @@ export default function Header(props) {
   return (
     <HeaderContainer>
       <h1>
-        <FontAwesomeIcon icon="code" />
         <Title>API Client</Title>
         <Version>{version}</Version>
       </h1>
