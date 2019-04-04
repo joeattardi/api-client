@@ -15,6 +15,11 @@ const Title = styled.span`
 const Trigger = styled.div`
   cursor: pointer;
   user-select: none;
+  padding: 0.25em;
+
+  &:hover {
+    background: #DDDDDD;
+  }
 `;
 
 export default class Collapsible extends Component {
