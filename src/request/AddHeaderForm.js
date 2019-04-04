@@ -14,8 +14,26 @@ const Form = styled.form`
   align-items: center;
 `;
 
-const AddButton = styled.div`
+const AddButton = styled.button`
   cursor: pointer;
+  color: #356079;
+  border: none;
+  background: transparent;
+  padding: 0;
+
+  &:hover {
+    color: #000000;
+    background: transparent;
+  }
+
+  &:disabled {
+    opacity: 0.4;
+
+    &:hover {
+      background: transparent;
+      color: #356079;
+    }
+  }
 `;
 
 export default class AddHeaderForm extends Component {
@@ -71,8 +89,7 @@ export default class AddHeaderForm extends Component {
           value={this.state.value}
           onChange={this.handleChangeValue}
           placeholder="Value" />
-        <button type="submit" hidden></button>
-        <AddButton onClick={this.handleSubmit}>
+        <AddButton>
           <FontAwesomeIcon icon="plus-square" />
         </AddButton>
       </Form>
