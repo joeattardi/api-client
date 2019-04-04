@@ -6,6 +6,8 @@ const Container = styled.span`
   color: white;
   border-radius: 5px;
   padding: 0 0.5em;
+  font-weight: normal;
+  font-size: 1em;
 `;
 
 export default function Badge({ text }) {

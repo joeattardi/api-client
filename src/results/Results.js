@@ -23,9 +23,20 @@ const Title = styled.h2`
 
 export default class Results extends Component {
   render() {
+    let [contentType] = this.props.response.headers['content-type'];
+    if (contentType.includes(';')) {
+      contentType = contentType.substring(0, contentType.indexOf(';'));
+    }
+
     const headersTitle = (
       <span>
         Headers <Badge text={Object.keys(this.props.response.headers).length} />
+      </span>
+    );
+
+    const bodyTitle = (
+      <span>
+        Body <Badge text={contentType} />
       </span>
     );
 
@@ -37,7 +48,7 @@ export default class Results extends Component {
           <Collapsible open={true} title={headersTitle}>
             <Headers headers={this.props.response.headers} />
           </Collapsible>
-          <Collapsible open={true} title="Body">
+          <Collapsible open={true} title={bodyTitle}>
             <Body response={this.props.response} />
           </Collapsible>
         </Container>
