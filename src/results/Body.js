@@ -32,7 +32,10 @@ export default class Body extends Component {
   }
 
   getPrettyBody() {
-    const [contentType] = this.props.response.headers['content-type'];
+    let [contentType] = this.props.response.headers['content-type'];
+    if (contentType.includes(';')) {
+      contentType = contentType.substring(0, contentType.indexOf(';'));
+    }
 
     let body = this.props.response.body;
     if (contentType === 'application/json') {
