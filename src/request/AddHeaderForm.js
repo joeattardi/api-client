@@ -3,6 +3,8 @@ import styled from 'styled-components';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import IconButton from '../IconButton';
+
 const Input = styled.input`
   margin-right: 0.5em;
   width: 25%;
@@ -12,28 +14,6 @@ const Form = styled.form`
   display: flex;
   margin-top: 0.2em;
   align-items: center;
-`;
-
-const AddButton = styled.button`
-  cursor: pointer;
-  color: #356079;
-  border: none;
-  background: transparent;
-  padding: 0;
-
-  &:hover {
-    color: #000000;
-    background: transparent;
-  }
-
-  &:disabled {
-    opacity: 0.4;
-
-    &:hover {
-      background: transparent;
-      color: #356079;
-    }
-  }
 `;
 
 export default class AddHeaderForm extends Component {
@@ -75,6 +55,10 @@ export default class AddHeaderForm extends Component {
     this.setState({ value: event.target.value });
   }
 
+  get isValid() {
+    return this.state.name && this.state.value;
+  }
+
   render() {
     return (
       <Form onSubmit={this.handleSubmit}>
@@ -89,9 +73,9 @@ export default class AddHeaderForm extends Component {
           value={this.state.value}
           onChange={this.handleChangeValue}
           placeholder="Value" />
-        <AddButton>
-          <FontAwesomeIcon icon="plus-square" />
-        </AddButton>
+        <IconButton disabled={!this.isValid}>
+          <FontAwesomeIcon icon="plus-square" fixedWidth={true} />
+        </IconButton>
       </Form>
     );
   }

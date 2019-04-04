@@ -3,18 +3,11 @@ import styled from 'styled-components';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
+import IconButton from '../IconButton';
+
 const Input = styled.input`
   margin-right: 0.5em;
   width: 25%;
-`;
-
-const DeleteButton = styled.span`
-  cursor: pointer;
-  color: #999999;
-
-  &:hover {
-    color: #000000;
-  }
 `;
 
 export default class Header extends Component {
@@ -67,9 +60,9 @@ export default class Header extends Component {
 
   renderDeleteButton() {
     return (
-      <DeleteButton onClick={this.onDelete}>
-        <FontAwesomeIcon icon="times" />
-      </DeleteButton>
+      <IconButton onClick={this.onDelete}>
+        <FontAwesomeIcon icon="times" fixedWidth={true} />
+      </IconButton>
     );
   }
 
