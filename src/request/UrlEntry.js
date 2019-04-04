@@ -14,14 +14,8 @@ const HTTP_METHODS = [
 ];
 
 const Container = styled.form`
-  background: #EFEFEF;
-  margin: 0.5em;
   display: flex;
   align-items: center;
-  border: 1px solid #999999;
-  border-radius: 5px;
-  padding: 0.5em;
-  width: 100%;
   box-sizing: border-box;
 `;
 

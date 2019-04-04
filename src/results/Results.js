@@ -12,6 +12,13 @@ const Container = styled.div`
   background: #EFEFEF;
   border: 1px solid #999999;
   border-radius: 5px;
+  margin: 0.5em;
+`;
+
+const Title = styled.h2`
+  align-self: flex-start;
+  margin: 0;
+  font-size: 1.2em;
 `;
 
 export default class Results extends Component {
@@ -23,15 +30,18 @@ export default class Results extends Component {
     );
 
     return (
-      <Container>
-        <Summary response={this.props.response} />
-        <Collapsible open={true} title={headersTitle}>
-          <Headers headers={this.props.response.headers} />
-        </Collapsible>
-        <Collapsible open={true} title="Body">
-          <Body response={this.props.response} />
-        </Collapsible>
-      </Container>
+      <>
+        <Title>Response</Title>
+        <Container>
+          <Summary response={this.props.response} />
+          <Collapsible open={true} title={headersTitle}>
+            <Headers headers={this.props.response.headers} />
+          </Collapsible>
+          <Collapsible open={true} title="Body">
+            <Body response={this.props.response} />
+          </Collapsible>
+        </Container>
+      </>
     );
   }
 }

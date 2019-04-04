@@ -69,6 +69,8 @@ ipcMain.on('sendRequest', (event, args) => {
 
   request.setHeader('User-Agent', `APIClient/${version}`);
 
+  args.headers.forEach(header => request.setHeader(header.name, header.value));
+
   request.on('response', response => {
     let responseBody = '';
     response.on('data', chunk => {

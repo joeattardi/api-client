@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCode, faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import { faCode, faCaretRight, faCaretDown, faPlusSquare, faTimes } from '@fortawesome/free-solid-svg-icons';
 import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
 
@@ -9,12 +9,12 @@ import 'react-tabs/style/react-tabs.css';
 import './App.css';
 
 import Header from './Header';
+import Request from './request/Request';
 import Results from './results/Results';
-import UrlEntry from './UrlEntry';
 
 const { ipcRenderer } = window.require('electron');
 
-library.add(faCode, faCaretRight, faCaretDown);
+library.add(faCode, faCaretRight, faCaretDown, faPlusSquare, faTimes);
 
 const Main = styled.main`
   display: flex;
@@ -49,7 +49,7 @@ export default class App extends Component {
       <div>
         <Header />
         <Main>
-          <UrlEntry onSend={this.sendRequest} />
+          <Request onSend={this.sendRequest} />
           { this.state.loading ? <Loader type="Oval" color="#333333" width={80} height={80} /> : null}
           { this.state.response ? <Results response={this.state.response} /> : null}
         </Main>
