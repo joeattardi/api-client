@@ -11,6 +11,7 @@ const Input = styled.input`
 const Form = styled.form`
   display: flex;
   margin-top: 0.2em;
+  align-items: center;
 `;
 
 const AddButton = styled.div`

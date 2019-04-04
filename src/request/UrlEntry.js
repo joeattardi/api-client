@@ -32,7 +32,7 @@ const Input = styled.input`
   margin: 0.5em;
 
   &.error {
-    border: 1px solid red;
+    border: 1px solid #FF0033;
   }
 `;
 
