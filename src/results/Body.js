@@ -6,6 +6,8 @@ import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
 import RawResults from './RawResults';
 
+import { getContentType } from '../utils';
+
 const Container = styled.div`
   padding: 0.5em;
   overflow: scroll;
@@ -32,10 +34,7 @@ export default class Body extends Component {
   }
 
   getPrettyBody() {
-    let [contentType] = this.props.response.headers['content-type'];
-    if (contentType.includes(';')) {
-      contentType = contentType.substring(0, contentType.indexOf(';'));
-    }
+    const contentType = getContentType(this.props.response);
 
     let body = this.props.response.body;
     if (contentType === 'application/json') {

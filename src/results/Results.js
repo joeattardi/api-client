@@ -7,6 +7,8 @@ import Collapsible from '../Collapsible';
 import Headers from './Headers';
 import Summary from './Summary';
 
+import { getContentType } from '../utils';
+
 const Container = styled.div`
   width: 100%;
   background: #EFEFEF;
@@ -23,10 +25,7 @@ const Title = styled.h2`
 
 export default class Results extends Component {
   render() {
-    let [contentType] = this.props.response.headers['content-type'];
-    if (contentType.includes(';')) {
-      contentType = contentType.substring(0, contentType.indexOf(';'));
-    }
+
 
     const headersTitle = (
       <span>
@@ -36,7 +35,7 @@ export default class Results extends Component {
 
     const bodyTitle = (
       <span>
-        Body <Badge text={contentType} />
+        Body <Badge text={getContentType(this.props.response)} />
       </span>
     );
 
