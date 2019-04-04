@@ -3,6 +3,10 @@ import React from 'react';
 import Select from 'react-select';
 import styled from 'styled-components';
 
+import validUrl from 'valid-url';
+
+import ErrorMessage from '../ErrorMessage';
+
 const HTTP_METHODS = [
   'DELETE',
   'GET',
@@ -26,6 +30,10 @@ const Input = styled.input`
   border: 1px solid #CCCCCC;
   flex-grow: 1;
   margin: 0.5em;
+
+  &.error {
+    border: 1px solid red;
+  }
 `;
 
 const StyledSelect = styled(Select)`
@@ -39,13 +47,17 @@ export default class UrlEntry extends React.Component {
     super(props);
 
     this.state = {
-      url: 'http://httpbin.org/get',
-      method: { value: 'GET', label: 'GET' }
+      url: '',
+      method: { value: 'GET', label: 'GET' },
+      valid: false,
+      validUrl: false,
+      touchedUrl: false
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleUrlChange = this.handleUrlChange.bind(this);
     this.handleMethodChange = this.handleMethodChange.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
   }
 
   handleSubmit(event) {
@@ -58,22 +70,42 @@ export default class UrlEntry extends React.Component {
   }
 
   handleUrlChange(event) {
+    const isValidUrl = validUrl.isWebUri(event.target.value);
+
     this.setState({
-      url: event.target.value
-    })
+      url: event.target.value,
+      valid: !!event.target.value && isValidUrl,
+      validUrl: isValidUrl
+    });
   }
 
   handleMethodChange(method) {
     this.setState({ method });
   }
 
+  handleBlur(event) {
+    this.setState({ touchedUrl: true });
+  }
+
+  hasUrlError() {
+    return !this.state.validUrl && this.state.touchedUrl;
+  }
+
   render() {
     return (
-      <Container onSubmit={this.handleSubmit}>
-          <StyledSelect options={methodOptions} value={this.state.method} onChange={this.handleMethodChange} />
-          <Input type="text" value={this.state.url} onChange={this.handleUrlChange} />
-          <button type="submit">Go</button>
-      </Container>
+      <>
+        {this.hasUrlError() ? <ErrorMessage>Invalid URL</ErrorMessage> : null}
+        <Container onSubmit={this.handleSubmit}>
+            <StyledSelect options={methodOptions} value={this.state.method} onChange={this.handleMethodChange} />
+            <Input
+              type="text"
+              value={this.state.url}
+              onChange={this.handleUrlChange}
+              onBlur={this.handleBlur}
+              className={this.hasUrlError() ? 'error' : ''} />
+            <button type="submit" disabled={!this.state.valid}>Go</button>
+        </Container>
+      </>
     );
   }
 }

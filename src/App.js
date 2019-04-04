@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCode, faCaretRight, faCaretDown, faPlusSquare, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faCode, faCaretRight, faCaretDown, faExclamationTriangle, faPlusSquare, faTimes } from '@fortawesome/free-solid-svg-icons';
 import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
 
@@ -14,7 +14,7 @@ import Results from './results/Results';
 
 const { ipcRenderer } = window.require('electron');
 
-library.add(faCode, faCaretRight, faCaretDown, faPlusSquare, faTimes);
+library.add(faCode, faCaretRight, faCaretDown, faExclamationTriangle, faPlusSquare, faTimes);
 
 const Main = styled.main`
   display: flex;

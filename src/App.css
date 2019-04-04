@@ -21,6 +21,15 @@ button:hover {
   background: #356079;
 }
 
+button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+button:disabled:hover {
+  background: #022D46;
+}
+
 input {
   border: 1px solid #CCCCCC;
   border-radius: 5px;

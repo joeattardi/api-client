@@ -18,7 +18,8 @@
     "react-syntax-highlighter": "^10.2.1",
     "react-tabs": "^3.0.0",
     "styled-components": "^4.2.0",
-    "typeface-open-sans": "0.0.54"
+    "typeface-open-sans": "0.0.54",
+    "valid-url": "^1.0.9"
   },
   "scripts": {
     "start": "react-scripts start",
