@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import SyntaxHighlighter from 'react-syntax-highlighter';
-import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
-import RawResults from './RawResults';
+import Badge from '../Badge';
+import Body from './Body';
+import Collapsible from '../Collapsible';
+import Headers from './Headers';
 import Summary from './Summary';
 
 const Container = styled.div`
@@ -11,41 +12,25 @@ const Container = styled.div`
   background: #EFEFEF;
   border: 1px solid #999999;
   border-radius: 5px;
-  padding: 0.5em;
-  overflow: scroll;
 `;
 
-const resultStyles = {
-  background: '#FFFFFF',
-  border: '1px solid #333333',
-  padding: '0.5em',
-  height: '50vh',
-  overflow: 'scroll'
-};
-
 export default class Results extends Component {
-  prettyPrintJSON(json) {
-    return JSON.stringify(JSON.parse(json), null, 2);
-  }
-
   render() {
+    const headersTitle = (
+      <span>
+        Headers <Badge text={Object.keys(this.props.response.headers).length} />
+      </span>
+    );
+
     return (
       <Container>
         <Summary response={this.props.response} />
-        <Tabs>
-          <TabList>
-            <Tab>Pretty</Tab>
-            <Tab>Raw</Tab>
-          </TabList>
-          <TabPanel>
-            <SyntaxHighlighter language="json" customStyle={resultStyles}>
-              {this.prettyPrintJSON(this.props.response.body)}
-            </SyntaxHighlighter>
-          </TabPanel>
-          <TabPanel>
-            <RawResults response={this.props.response} />
-          </TabPanel>
-        </Tabs>
+        <Collapsible open={true} title={headersTitle}>
+          <Headers headers={this.props.response.headers} />
+        </Collapsible>
+        <Collapsible open={true} title="Body">
+          <Body response={this.props.response} />
+        </Collapsible>
       </Container>
     );
   }

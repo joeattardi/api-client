@@ -80,7 +80,8 @@ ipcMain.on('sendRequest', (event, args) => {
         body: responseBody,
         status: response.statusCode,
         statusMessage: response.statusMessage,
-        time: Date.now() - start
+        time: Date.now() - start,
+        headers: response.headers
       });
     })
   });

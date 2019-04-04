@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
-import { faCode } from '@fortawesome/free-solid-svg-icons';
+import { faCode, faCaretRight, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
 
@@ -14,7 +14,7 @@ import UrlEntry from './UrlEntry';
 
 const { ipcRenderer } = window.require('electron');
 
-library.add(faCode);
+library.add(faCode, faCaretRight, faCaretDown);
 
 const Main = styled.main`
   display: flex;

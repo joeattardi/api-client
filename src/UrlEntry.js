@@ -22,6 +22,7 @@ const Container = styled.form`
   border-radius: 5px;
   padding: 0.5em;
   width: 90%;
+  box-sizing: border-box;
 `;
 
 const Input = styled.input`
