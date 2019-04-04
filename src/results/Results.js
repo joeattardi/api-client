@@ -29,7 +29,12 @@ export default class Results extends Component {
     return (
       <Container>
         <Summary response={this.props.response} />
-        <ReactJson src={JSON.parse(this.props.response.body)} name={false} style={resultStyles} />
+        <ReactJson 
+          src={JSON.parse(this.props.response.body)} 
+          name={false} style={resultStyles}
+          enableClipboard={false}
+          displayObjectSize={false}
+          displayDataTypes={false} />
       </Container>
     );
   }
