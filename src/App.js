@@ -5,7 +5,9 @@ import { faCode } from '@fortawesome/free-solid-svg-icons';
 import Loader from 'react-loader-spinner';
 import styled from 'styled-components';
 
+import 'react-tabs/style/react-tabs.css';
 import './App.css';
+
 import Header from './Header';
 import Results from './results/Results';
 import UrlEntry from './UrlEntry';

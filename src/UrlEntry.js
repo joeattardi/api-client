@@ -13,7 +13,7 @@ const HTTP_METHODS = [
   'PUT'
 ];
 
-const Container = styled.div`
+const Container = styled.form`
   background: #EFEFEF;
   margin: 0.5em;
   display: flex;
@@ -37,20 +37,6 @@ const StyledSelect = styled(Select)`
   width: 8em;
 `;
 
-const Button = styled.button`
-  cursor: pointer;
-  padding: 0.5em;
-  font-size: 1em;
-  border-radius: 5px;
-  background: #022D46;
-  color: #FFFFFF;
-  font-weight: bold;
-
-  &:hover {
-    background: #356079;
-  }
-`;
-
 const methodOptions = HTTP_METHODS.map(method => ({ value: method, label: method }));
 
 export default class UrlEntry extends React.Component {
@@ -62,12 +48,14 @@ export default class UrlEntry extends React.Component {
       method: { value: 'GET', label: 'GET' }
     };
 
-    this.handleClickGo = this.handleClickGo.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
     this.handleUrlChange = this.handleUrlChange.bind(this);
     this.handleMethodChange = this.handleMethodChange.bind(this);
   }
 
-  handleClickGo() {
+  handleSubmit(event) {
+    event.preventDefault();
+
     this.props.onSend({
       url: this.state.url,
       method: this.state.method.value
@@ -86,10 +74,10 @@ export default class UrlEntry extends React.Component {
 
   render() {
     return (
-      <Container>
-        <StyledSelect options={methodOptions} value={this.state.method} onChange={this.handleMethodChange} />
-        <Input type="text" value={this.state.url} onChange={this.handleUrlChange} />
-        <Button onClick={this.handleClickGo}>Go</Button>
+      <Container onSubmit={this.handleSubmit}>
+          <StyledSelect options={methodOptions} value={this.state.method} onChange={this.handleMethodChange} />
+          <Input type="text" value={this.state.url} onChange={this.handleUrlChange} />
+          <button type="submit">Go</button>
       </Container>
     );
   }

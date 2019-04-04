@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import SyntaxHighlighter from 'react-syntax-highlighter';
-import ReactJson from 'react-json-view';
+import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
+import RawResults from './RawResults';
 import Summary from './Summary';
 
 const Container = styled.div`
@@ -17,7 +18,9 @@ const Container = styled.div`
 const resultStyles = {
   background: '#FFFFFF',
   border: '1px solid #333333',
-  padding: '0.5em'
+  padding: '0.5em',
+  height: '50vh',
+  overflow: 'scroll'
 };
 
 export default class Results extends Component {
@@ -29,12 +32,20 @@ export default class Results extends Component {
     return (
       <Container>
         <Summary response={this.props.response} />
-        <ReactJson 
-          src={JSON.parse(this.props.response.body)} 
-          name={false} style={resultStyles}
-          enableClipboard={false}
-          displayObjectSize={false}
-          displayDataTypes={false} />
+        <Tabs>
+          <TabList>
+            <Tab>Pretty</Tab>
+            <Tab>Raw</Tab>
+          </TabList>
+          <TabPanel>
+            <SyntaxHighlighter language="json" customStyle={resultStyles}>
+              {this.prettyPrintJSON(this.props.response.body)}
+            </SyntaxHighlighter>
+          </TabPanel>
+          <TabPanel>
+            <RawResults response={this.props.response} />
+          </TabPanel>
+        </Tabs>
       </Container>
     );
   }
