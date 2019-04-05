@@ -16,7 +16,7 @@ const Form = styled.form`
   align-items: center;
 `;
 
-export default class AddHeaderForm extends Component {
+export default class AddNameValuePairForm extends Component {
   constructor(props) {
     super(props);
 
@@ -34,7 +34,7 @@ export default class AddHeaderForm extends Component {
 
   handleSubmit(event) {
     event.preventDefault();
-    this.props.onAddHeader({
+    this.props.onAddItem({
       name: this.state.name,
       value: this.state.value
     });

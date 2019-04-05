@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
-import Headers from './Headers';
+import NameValueList from './NameValueList';
 import UrlEntry from './UrlEntry';
 
 const Title = styled.h2`
@@ -55,7 +55,7 @@ export default class Request extends Component {
               <Tab>Headers</Tab>
             </TabList>
             <TabPanel>
-              <Headers onChange={this.updateHeaders} />
+              <NameValueList onChange={this.updateHeaders} />
             </TabPanel>
           </Tabs>
         </Container>

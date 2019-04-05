@@ -48,7 +48,7 @@ export default class UrlEntry extends React.Component {
 
     this.state = {
       url: '',
-      method: { value: 'GET', label: 'GET' },
+      method: methodOptions[1],
       valid: false,
       validUrl: false,
       touchedUrl: false

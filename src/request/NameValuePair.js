@@ -10,7 +10,7 @@ const Input = styled.input`
   width: 25%;
 `;
 
-export default class Header extends Component {
+export default class NameValuePair extends Component {
   constructor(props) {
     super(props);
 
