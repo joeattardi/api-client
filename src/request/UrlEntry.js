@@ -54,8 +54,6 @@ export default class UrlEntry extends React.Component {
       touchedUrl: false
     };
 
-    this.urlRef = React.createRef();
-
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleUrlChange = this.handleUrlChange.bind(this);
     this.handleMethodChange = this.handleMethodChange.bind(this);
@@ -85,16 +83,13 @@ export default class UrlEntry extends React.Component {
     this.setState({ method });
   }
 
-  handleBlur(event) {
+  handleBlur() {
+    console.log('BLUR');
     this.setState({ touchedUrl: true });
   }
 
   hasUrlError() {
     return !this.state.validUrl && this.state.touchedUrl;
-  }
-
-  componentDidMount() {
-    this.urlRef.current.focus();
   }
 
   render() {
@@ -105,7 +100,6 @@ export default class UrlEntry extends React.Component {
             <StyledSelect options={methodOptions} value={this.state.method} onChange={this.handleMethodChange} />
             <Input
               type="text"
-              ref={this.urlRef}
               value={this.state.url}
               onChange={this.handleUrlChange}
               onBlur={this.handleBlur}
