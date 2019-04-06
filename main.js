@@ -62,9 +62,17 @@ app.on('activate', function() {
 ipcMain.on('sendRequest', (event, args) => {
   let start;
 
+  let url = new URL(args.url);
+
+  if (args.queryParams.length) {
+    const params = new URLSearchParams();
+    args.queryParams.forEach(({ name, value }) => params.append(name, value));
+    url.search = params.toString();
+  }
+
   const request = net.request({
     method: args.method,
-    url: args.url
+    url: url.toString()
   });
 
   request.setHeader('User-Agent', `APIClient/${version}`);

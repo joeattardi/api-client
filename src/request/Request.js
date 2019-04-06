@@ -26,7 +26,8 @@ export default class Request extends Component {
     super(props);
 
     this.state = {
-      headers: []
+      headers: [],
+      queryParams: []
     };
 
     this.updateHeaders = this.updateHeaders.bind(this);
@@ -34,6 +35,10 @@ export default class Request extends Component {
     this.addHeader = this.addHeader.bind(this);
     this.changeHeader = this.changeHeader.bind(this);
     this.deleteHeader = this.deleteHeader.bind(this);
+
+    this.addQueryParam = this.addQueryParam.bind(this);
+    this.changeQueryParam = this.changeQueryParam.bind(this);
+    this.deleteQUeryParam = this.deleteQueryParam.bind(this);
 
     this.sendRequest = this.sendRequest.bind(this);
   }
@@ -45,7 +50,8 @@ export default class Request extends Component {
   sendRequest(requestConfig) {
     this.props.onSend({
       ...requestConfig,
-      headers: this.state.headers
+      headers: this.state.headers,
+      queryParams: this.state.queryParams
     });
   }
 
@@ -59,7 +65,6 @@ export default class Request extends Component {
   }
 
   changeHeader({ name, value, index }) {
-    console.log(name);
     this.setState({
       headers: this.state.headers.map((header, i) => {
         if (i === index) {
@@ -77,6 +82,33 @@ export default class Request extends Component {
     });
   }
 
+  addQueryParam({ name, value }) {
+    this.setState({
+      queryParams: [
+        ...this.state.queryParams,
+        { name, value }
+      ]
+    });
+  }
+
+  changeQueryParam({ name, value, index }) {
+    this.setState({
+      queryParams: this.state.queryParams.map((queryParam, i) => {
+        if (i === index) {
+          return { name, value };
+        }
+
+        return queryParam;
+      })
+    });
+  }
+
+  deleteQueryParam(index) {
+    this.setState({
+      queryParams: this.state.queryParams.filter((queryParam, i) => i !== index)
+    });
+  }
+
   render() {
     return (
       <>
@@ -85,8 +117,16 @@ export default class Request extends Component {
           <UrlEntry onSend={this.sendRequest} />
           <Tabs>
             <TabList>
+              <Tab>Query Params</Tab>
               <Tab>Headers</Tab>
             </TabList>
+            <TabPanel>
+              <NameValueList
+                items={this.state.queryParams}
+                onAddItem={this.addQueryParam}
+                onChangeItem={this.changeQueryParam}
+                onDeleteItem={this.deleteQueryParam} />
+            </TabPanel>
             <TabPanel>
               <NameValueList 
                 items={this.state.headers}
