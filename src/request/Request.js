@@ -32,13 +32,9 @@ export default class Request extends Component {
 
     this.updateHeaders = this.updateHeaders.bind(this);
 
-    this.addHeader = this.addHeader.bind(this);
-    this.changeHeader = this.changeHeader.bind(this);
-    this.deleteHeader = this.deleteHeader.bind(this);
-
-    this.addQueryParam = this.addQueryParam.bind(this);
-    this.changeQueryParam = this.changeQueryParam.bind(this);
-    this.deleteQUeryParam = this.deleteQueryParam.bind(this);
+    this.addItemHandler = this.addItemHandler.bind(this);
+    this.changeItemHandler = this.changeItemHandler.bind(this);
+    this.deleteItemHandler = this.deleteItemHandler.bind(this);
 
     this.sendRequest = this.sendRequest.bind(this);
   }
@@ -55,58 +51,37 @@ export default class Request extends Component {
     });
   }
 
-  addHeader({ name, value }) {
-    this.setState({
-      headers: [
-        ...this.state.headers,
-        { name, value }
-      ]
-    });
+  addItemHandler(key) {
+    return ({ name, value }) => {
+      this.setState({
+        [key]: [
+          ...this.state[key],
+          { name, value }
+        ]
+      });
+    };
   }
 
-  changeHeader({ name, value, index }) {
-    this.setState({
-      headers: this.state.headers.map((header, i) => {
-        if (i === index) {
-          return { name, value };
-        }
-
-        return header;
-      })
-    });
+  changeItemHandler(key) {
+    return ({ name, value, index}) => {
+      this.setState({
+        [key]: this.state[key].map((item, i) => {
+          if (i === index) {
+            return { name, value };
+          }
+  
+          return item;
+        })
+      });
+    };
   }
 
-  deleteHeader(index) {
-    this.setState({
-      headers: this.state.headers.filter((header, i) => i !== index)
-    });
-  }
-
-  addQueryParam({ name, value }) {
-    this.setState({
-      queryParams: [
-        ...this.state.queryParams,
-        { name, value }
-      ]
-    });
-  }
-
-  changeQueryParam({ name, value, index }) {
-    this.setState({
-      queryParams: this.state.queryParams.map((queryParam, i) => {
-        if (i === index) {
-          return { name, value };
-        }
-
-        return queryParam;
-      })
-    });
-  }
-
-  deleteQueryParam(index) {
-    this.setState({
-      queryParams: this.state.queryParams.filter((queryParam, i) => i !== index)
-    });
+  deleteItemHandler(key) {
+    return index => {
+      this.setState({
+        [key]: this.state[key].filter((item, i) => i !== index)
+      });
+    };
   }
 
   render() {
@@ -123,16 +98,16 @@ export default class Request extends Component {
             <TabPanel>
               <NameValueList
                 items={this.state.queryParams}
-                onAddItem={this.addQueryParam}
-                onChangeItem={this.changeQueryParam}
-                onDeleteItem={this.deleteQueryParam} />
+                onAddItem={this.addItemHandler('queryParams')}
+                onChangeItem={this.changeItemHandler('queryParams')}
+                onDeleteItem={this.deleteItemHandler('queryParams')} />
             </TabPanel>
             <TabPanel>
               <NameValueList 
                 items={this.state.headers}
-                onAddItem={this.addHeader}
-                onChangeItem={this.changeHeader}
-                onDeleteItem={this.deleteHeader} />
+                onAddItem={this.addItemHandler('headers')}
+                onChangeItem={this.changeItemHandler('headers')}
+                onDeleteItem={this.deleteItemHandler('headers')} />
             </TabPanel>
           </Tabs>
         </Container>
