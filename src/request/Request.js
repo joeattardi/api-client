@@ -30,6 +30,11 @@ export default class Request extends Component {
     };
 
     this.updateHeaders = this.updateHeaders.bind(this);
+
+    this.addHeader = this.addHeader.bind(this);
+    this.changeHeader = this.changeHeader.bind(this);
+    this.deleteHeader = this.deleteHeader.bind(this);
+
     this.sendRequest = this.sendRequest.bind(this);
   }
 
@@ -44,6 +49,34 @@ export default class Request extends Component {
     });
   }
 
+  addHeader({ name, value }) {
+    this.setState({
+      headers: [
+        ...this.state.headers,
+        { name, value }
+      ]
+    });
+  }
+
+  changeHeader({ name, value, index }) {
+    console.log(name);
+    this.setState({
+      headers: this.state.headers.map((header, i) => {
+        if (i === index) {
+          return { name, value };
+        }
+
+        return header;
+      })
+    });
+  }
+
+  deleteHeader(index) {
+    this.setState({
+      headers: this.state.headers.filter((header, i) => i !== index)
+    });
+  }
+
   render() {
     return (
       <>
@@ -55,7 +88,11 @@ export default class Request extends Component {
               <Tab>Headers</Tab>
             </TabList>
             <TabPanel>
-              <NameValueList onChange={this.updateHeaders} />
+              <NameValueList 
+                items={this.state.headers}
+                onAddItem={this.addHeader}
+                onChangeItem={this.changeHeader}
+                onDeleteItem={this.deleteHeader} />
             </TabPanel>
           </Tabs>
         </Container>
