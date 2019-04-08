@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 
+import Body from './Body';
 import NameValueList from './NameValueList';
 import UrlEntry from './UrlEntry';
 
@@ -27,7 +28,8 @@ export default class Request extends Component {
 
     this.state = {
       headers: [],
-      queryParams: []
+      queryParams: [],
+      body: ''
     };
 
     this.updateHeaders = this.updateHeaders.bind(this);
@@ -35,6 +37,8 @@ export default class Request extends Component {
     this.addItemHandler = this.addItemHandler.bind(this);
     this.changeItemHandler = this.changeItemHandler.bind(this);
     this.deleteItemHandler = this.deleteItemHandler.bind(this);
+
+    this.updateBody = this.updateBody.bind(this);
 
     this.sendRequest = this.sendRequest.bind(this);
   }
@@ -47,7 +51,8 @@ export default class Request extends Component {
     this.props.onSend({
       ...requestConfig,
       headers: this.state.headers,
-      queryParams: this.state.queryParams
+      queryParams: this.state.queryParams,
+      body: this.state.body
     });
   }
 
@@ -84,6 +89,12 @@ export default class Request extends Component {
     };
   }
 
+  updateBody(value) {
+    this.setState({
+      body: value
+    });
+  }
+
   render() {
     return (
       <>
@@ -94,6 +105,7 @@ export default class Request extends Component {
             <TabList>
               <Tab>Query Params</Tab>
               <Tab>Headers</Tab>
+              <Tab>Body</Tab>
             </TabList>
             <TabPanel>
               <NameValueList
@@ -108,6 +120,9 @@ export default class Request extends Component {
                 onAddItem={this.addItemHandler('headers')}
                 onChangeItem={this.changeItemHandler('headers')}
                 onDeleteItem={this.deleteItemHandler('headers')} />
+            </TabPanel>
+            <TabPanel>
+              <Body body={this.state.body} onChange={this.updateBody} />
             </TabPanel>
           </Tabs>
         </Container>

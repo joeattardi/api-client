@@ -97,5 +97,11 @@ ipcMain.on('sendRequest', (event, args) => {
   });
 
   start = Date.now();
+
+  if (args.body) {
+    request.setHeader('Content-Type', 'application/json');
+    request.write(args.body);
+  }
+
   request.end();
 });
