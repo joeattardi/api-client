@@ -29,7 +29,8 @@ export default class Request extends Component {
     this.state = {
       headers: [],
       queryParams: [],
-      body: ''
+      body: '',
+      bodyContentType: 'application/json'
     };
 
     this.updateHeaders = this.updateHeaders.bind(this);
@@ -39,6 +40,7 @@ export default class Request extends Component {
     this.deleteItemHandler = this.deleteItemHandler.bind(this);
 
     this.updateBody = this.updateBody.bind(this);
+    this.updateBodyContentType = this.updateBodyContentType.bind(this);
 
     this.sendRequest = this.sendRequest.bind(this);
   }
@@ -52,7 +54,8 @@ export default class Request extends Component {
       ...requestConfig,
       headers: this.state.headers,
       queryParams: this.state.queryParams,
-      body: this.state.body
+      body: this.state.body,
+      bodyContentType: this.state.bodyContentType
     });
   }
 
@@ -89,10 +92,12 @@ export default class Request extends Component {
     };
   }
 
-  updateBody(value) {
-    this.setState({
-      body: value
-    });
+  updateBody(body) {
+    this.setState({ body });
+  }
+
+  updateBodyContentType(bodyContentType) {
+    this.setState({ bodyContentType });
   }
 
   render() {
@@ -122,7 +127,10 @@ export default class Request extends Component {
                 onDeleteItem={this.deleteItemHandler('headers')} />
             </TabPanel>
             <TabPanel>
-              <Body body={this.state.body} onChange={this.updateBody} />
+              <Body
+                body={this.state.body}
+                onContentTypeChange={this.updateBodyContentType}
+                onChange={this.updateBody} />
             </TabPanel>
           </Tabs>
         </Container>

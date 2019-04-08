@@ -77,6 +77,10 @@ ipcMain.on('sendRequest', (event, args) => {
 
   request.setHeader('User-Agent', `APIClient/${version}`);
 
+  if (args.bodyContentType) {
+    request.setHeader('Content-Type', args.bodyContentType);
+  }
+
   args.headers.forEach(header => request.setHeader(header.name, header.value));
 
   request.on('response', response => {
@@ -99,7 +103,6 @@ ipcMain.on('sendRequest', (event, args) => {
   start = Date.now();
 
   if (args.body) {
-    request.setHeader('Content-Type', 'application/json');
     request.write(args.body);
   }
 
