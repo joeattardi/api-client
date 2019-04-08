@@ -38,6 +38,7 @@ const Input = styled.input`
 
 const StyledSelect = styled(Select)`
   width: 8em;
+  z-index: 999;
 `;
 
 const methodOptions = HTTP_METHODS.map(method => ({ value: method, label: method }));
